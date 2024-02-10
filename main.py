@@ -1,8 +1,5 @@
 import cv2
 import numpy as np
-#function to find the average of a list
-def average(list):
-   return(int(sum(list)/len(list)))
 
 #get video from camera
 video = cv2.VideoCapture(0)

@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-
+#researched from https://medium.com/analytics-vidhya/building-a-lane-detection-system-f7a727c6694
 #get video from camera
 video = cv2.VideoCapture(0)
 
@@ -67,6 +67,7 @@ while True:
         #keeps track of the unique slope count
         test = 0
         for a in slopecount:
+            #looks to see if the slope is similar to the slopes in slopecount
            if a -0.2 < slope <0.2 +a:
               slopecount[a] += 1
               test = 1
@@ -90,9 +91,10 @@ while True:
        for a in slopes:
           if sloper- 0.1< slopes[a]<sloper+0.1:
               points = a
-
+              #calculates y intercept
               yinterception = points[0][1]-sloper*points[0][0]
               checker = 0
+              #adds the x and y values of the endpoints of a line to a dictionary corresponding to their y intercept
               for b in pointsy:
                   if b - 20 < yinterception < b+20:
                       xval = pointsy[b][0]
@@ -108,7 +110,7 @@ while True:
                   xval = [points[0][0],points[1][0]]
                   yval = [points[0][1],points[1][1]]
                   pointsy[yinterception] = [xval,yval]
-
+              #adds y intercepts to another list
               testing =0
               for yintercept in yintercepts:
                   if yintercept - 1 < yinterception < yintercept +1:
@@ -116,9 +118,10 @@ while True:
               if testing == 0:
                   yintercepts.append(yinterception)
 
-
+       
        if pointsy != {}:
            for intercepty in pointsy:
+               #adds a line that condenses all the smaller lines with similar y intercepts
                xval = pointsy[intercepty][0]
                yval = pointsy[intercepty][1]
                if sloper < 0:
